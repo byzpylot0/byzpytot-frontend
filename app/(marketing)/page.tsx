@@ -6,6 +6,7 @@ import CTA from "./components/cta";
 import Stats from "./components/stats";
 
 const MarketingPage = () => {
+
   return (
     <div className="mt-14">
       <Hero />

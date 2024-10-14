@@ -2,15 +2,32 @@
 
 import AuthProvider from "../authProvider";
 import { Sidebar } from "./components/sidebar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
+import { getCurrentUser } from "aws-amplify/auth";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [user, setUser] = useState<any>(null); // État pour stocker l'utilisateur
 
     const toggleSidebar = () => {
         setIsCollapsed((prev) => !prev);
     };
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser(); // Utilisez Auth pour obtenir l'utilisateur courant
+                setUser(currentUser);
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+
 
     return (
         <div>
